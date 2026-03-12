@@ -29,3 +29,5 @@ function gameLoop() {
 
 // Запускаем игру
 gameLoop();
+
+helloCore();
