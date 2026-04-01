@@ -56,11 +56,11 @@ window.GameAI = {
     
     // НОВЫЙ МЕТОД: спавн врага на краю карты
     spawnEnemy: function() {
-        const side = Math.random() > 0.5 ? 50 : 750;
-        const y = 150 + Math.random() * 350;
-        const hp = GameBalance.ENEMY_BASE_HP + Math.random() * 15;
-        this.addEnemy(side, y, hp);
-    },
+    const side = Math.random() > 0.5 ? 50 : 750;
+    const y = 150 + Math.random() * 350;
+    const hp = GameBalance.ENEMY_BASE_HP + Math.random() * 15;
+    this.addEnemy(side, y, hp);
+},
     
     // Проверка атаки врага на игрока
     checkAttack: function(playerX, playerY, radius = 42) {
