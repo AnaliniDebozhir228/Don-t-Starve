@@ -205,13 +205,23 @@ window.CoreGame = {
     
     // Атака врага
     attack: function() {
-        if(!GameState.gameActive) return;
+    if(!GameState.gameActive) return;
+    
+    const nearest = GameAI.findNearestEnemy(
+        GameState.player.x, 
+        GameState.player.y, 
+        GameBalance.ATTACK_RADIUS
+    );
+    
+    if(nearest) {
+        const enemyId = nearest.id;
+        const defeated = GameAI.damageEnemy(enemyId, GameBalance.PLAYER_DAMAGE);
+        EffectsManager.addHitEffect(nearest.x, nearest.y);  // <-- эффект удара
+        SoundManager.play('click');  // <-- звук
+        // ...
+    }
+}
         
-        const nearest = GameAI.findNearestEnemy(
-            GameState.player.x, 
-            GameState.player.y, 
-            GameBalance.ATTACK_RADIUS
-        );
         
         if(nearest) {
             const enemyId = nearest.id;
