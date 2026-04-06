@@ -51,6 +51,21 @@ window.GameAI = {
     getEnemies: function() {
         return this.enemies;
     },
+
+     // ближайший враг
+    findNearestEnemy: function(playerX, playerY, range) {
+        let nearest = null;
+        let minDist = range;
+        
+        for(let e of this.enemies) {
+            const dist = Math.hypot(playerX - e.x, playerY - e.y);
+            if(dist < minDist) {
+                minDist = dist;
+                nearest = e;
+            }
+        }
+        return nearest;
+    },
     
     damageEnemy: function(enemyId, damage) {
         const enemy = this.enemies.find(e => e.id === enemyId);
