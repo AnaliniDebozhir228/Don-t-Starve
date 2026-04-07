@@ -311,3 +311,38 @@ window.CoreGame = {
 };
 
 helloCore();
+// Добавить после движения игрока
+this.autoGatherResources();
+autoGatherResources: function() {
+    if(!GameState.gameActive) return;
+    
+    const autoRadius = 25;  // Радиус автоподбора
+    
+    // Автосбор деревьев
+    const trees = GameState.getTreesInRange(GameState.player.x, GameState.player.y, autoRadius);
+    if(trees.length > 0) {
+        const gain = Math.min(trees[0].wood, GameBalance.GATHER_WOOD_AMOUNT);
+        trees[0].wood -= gain;
+        GameState.addWood(gain);
+        if(window.EffectsManager) {
+            EffectsManager.addPickupEffect(trees[0].x, trees[0].y);
+        }
+        if(trees[0].wood <= 0) {
+            GameState.removeTree(trees[0]);
+        }
+    }
+    
+    // Автосбор ягод
+    const berries = GameState.getBerriesInRange(GameState.player.x, GameState.player.y, autoRadius);
+    if(berries.length > 0) {
+        const gain = Math.min(berries[0].count, GameBalance.GATHER_BERRY_AMOUNT);
+        berries[0].count -= gain;
+        GameState.addHunger(gain * GameBalance.BERRY_HUNGER_RESTORE);
+        if(window.EffectsManager) {
+            EffectsManager.addPickupEffect(berries[0].x, berries[0].y);
+        }
+        if(berries[0].count <= 0) {
+            GameState.removeBerry(berries[0]);
+        }
+    }
+}
