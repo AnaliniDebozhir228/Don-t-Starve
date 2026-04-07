@@ -34,22 +34,30 @@ window.EffectsManager = {
     },
     
     // Отрисовка всех эффектов
-    draw: function(ctx) {
-        for(let e of this.effects) {
-            const alpha = e.lifetime / e.maxLifetime;  // прозрачность уменьшается со временем
-            const radius = 20 * (1 - alpha);  // радиус уменьшается
-            
+    draw: function(ctx, camera) {
+         for(let e of this.effects) {
+            const alpha = e.lifetime / e.maxLifetime;
+            const radius = 20 * (1 - alpha);
+        
+            // Конвертация мировых координат в экранные
+            const screenX = e.x - camera.x;
+            const screenY = e.y - camera.y;
+        
+            // Проверка видимости на экране
+            if(screenX + radius < 0 || screenX - radius > 800 || 
+               screenY + radius < 0 || screenY - radius > 600) continue;
+        
             if(e.type === 'pickup') {
-                ctx.fillStyle = `rgba(255, 215, 0, ${alpha})`;  // золотой
+                ctx.fillStyle = `rgba(255, 215, 0, ${alpha})`;
             } else {
-                ctx.fillStyle = `rgba(255, 100, 100, ${alpha})`;  // красный
+                ctx.fillStyle = `rgba(255, 100, 100, ${alpha})`;
             }
             
             ctx.beginPath();
-            ctx.arc(e.x, e.y, radius, 0, Math.PI * 2);
+            ctx.arc(screenX, screenY, radius, 0, Math.PI * 2);
             ctx.fill();
         }
-    },
+    }
     //убедиться, что в методе addPickupEffect есть этот код:
     addPickupEffect: function(x, y) {
         this.effects.push({
