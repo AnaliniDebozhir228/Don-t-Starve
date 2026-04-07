@@ -53,9 +53,29 @@ GameRenderer.drawUIcon('meat', 100, 8, hunger);   // вместо ручного
     ctx.fillText(Math.floor(hunger), 140, 35);  // <-- Math.floor
     ctx.fillText(wood, 235, 35);                // <-- wood уже целое число
     ctx.fillText("🌞 Day " + day, 700, 35);
+
+    // Добавить после строки с Day
+    const dayProgress = GameState.dayTimer / GameBalance.DAY_DURATION;
+    const isNight = dayProgress > 0.6;
+
+// Иконка времени суток
+    ctx.fillStyle = isNight ? "#aaaaff" : "#ffaa44";
+    ctx.font = "20px monospace";
+    ctx.fillText(isNight ? "🌙" : "☀️", 650, 35);
+
+// Прогресс дня (полоска)
+    ctx.fillStyle = isNight ? "#4466aa" : "#ffcc66";
+    ctx.fillRect(670, 25, 30, 6);
+    ctx.fillStyle = isNight ? "#88aaff" : "#ffee88";
+    ctx.fillRect(670, 25, 30 * (isNight ? (dayProgress - 0.6) / 0.4 : dayProgress / 0.6), 6);
     
     // Рисуем полоски здоровья и голода
     window.drawHungerHealth(ctx, hunger, health);
+
+    // Добавить в конец функции
+    ctx.fillStyle = "#ff6666";
+    ctx.font = "12px monospace";
+    ctx.fillText(`👾 ${GameState.enemies.length}`, 750, 50);
 };
 
 // Отрисовка кнопок UI
@@ -135,3 +155,13 @@ window.drawHungerHealth = function(ctx, hunger, health) {
     window.drawHungerBar(ctx, startX, startY + barHeight + 5, hunger);
     window.drawBarText(ctx, startX, startY + barHeight + 5, 'Hunger', hunger);
 }
+
+window.drawLowHealthOverlay = function(ctx, healthPercent) {
+    if(healthPercent > 30) return;
+    
+    const intensity = 0.3 * (1 - healthPercent / 30);
+    const blink = Math.sin(Date.now() * 0.01) * 0.5 + 0.5;
+    
+    ctx.fillStyle = `rgba(255, 0, 0, ${intensity * blink})`;
+    ctx.fillRect(0, 0, 800, 600);
+};
