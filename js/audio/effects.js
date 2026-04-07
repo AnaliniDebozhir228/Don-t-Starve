@@ -47,6 +47,7 @@ window.EffectsManager = {
             if(screenX + radius < 0 || screenX - radius > 800 || 
                screenY + radius < 0 || screenY - radius > 600) continue;
         
+
             if(e.type === 'pickup') {
                 ctx.fillStyle = `rgba(255, 215, 0, ${alpha})`;
             } else {

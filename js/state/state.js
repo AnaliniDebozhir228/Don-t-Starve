@@ -131,12 +131,14 @@ window.GameState = {
     damagePlayer: function(amount) {
         this.player.hp -= amount;
         if(window.SoundManager) {
-            SoundManager.play('hit'); 
+            SoundManager.play('hit_player');  // Добавить звук
         }
         if(this.player.hp <= 0) {
             this.gameActive = false;
         }
     },
+
+    
     
     // Лечение игрока
     healPlayer: function(amount) {
@@ -152,8 +154,11 @@ window.GameState = {
             SoundManager.play('day_change');
         }
         console.log(`🌞 Day ${this.day}`);
-}
+
     },
+
+},
+
     
     // Удаление дерева
     removeTree: function(index) {

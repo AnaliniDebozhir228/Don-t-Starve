@@ -86,6 +86,22 @@ playMusic: function(name, volume = 0.3) {
         if(sound) {
             sound.volume = Math.max(0, Math.min(1, volume));
         }
+    },
+        // Добавить в SoundManager
+    playDayMusic: function() {
+        if(this.currentDayMusic) this.stopMusic(this.currentDayMusic);
+        this.currentDayMusic = 'ambient_day';
+        this.playMusic('ambient_day', 0.3);
+    },
+    
+    playNightMusic: function() {
+        if(this.currentDayMusic) this.stopMusic(this.currentDayMusic);
+        this.currentDayMusic = 'ambient_night';
+        this.playMusic('ambient_night', 0.25);
+    },
+    
+    isNightTime: function(dayTimer, dayDuration) {
+        return dayTimer > dayDuration * 0.6; // Ночь начинается с 60% дня
     }
     playDayMusic: function() {
         if(this.currentDayMusic) this.stopMusic(this.currentDayMusic);

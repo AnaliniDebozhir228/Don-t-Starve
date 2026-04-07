@@ -21,8 +21,8 @@ window.onload = function() {
         if(imagesLoaded && soundsLoaded) {
             console.log("🎮 All resources loaded! Starting game...");
             GameState.init();
-            CoreGame.start();
             SoundManager.playMusic('ambient', 0.3);
+            CoreGame.start();
             startGameLoop();
             // Заменить существующий объект imagesToLoad на:
 const imagesToLoad = window.GameAssets.images;
