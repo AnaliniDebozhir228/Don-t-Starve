@@ -143,10 +143,8 @@ drawTree: function(worldX, worldY) {
         this.ctx.fillStyle = "white";
         this.ctx.font = "bold 18px monospace";
         this.ctx.fillText(Math.floor(value), x + 35, y + 22);
-    }
-};
-
-drawFogOfWar: function(playerX, playerY, visionRadius = 200) {
+    },
+    drawFogOfWar: function(playerX, playerY, visionRadius = 200) {
     this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
     this.ctx.fillRect(0, 0, 800, 600);
     
@@ -164,3 +162,4 @@ drawFogOfWar: function(playerX, playerY, visionRadius = 200) {
     this.ctx.fillRect(0, 0, 800, 600);
     this.ctx.globalCompositeOperation = 'source-over';
 }
+};
